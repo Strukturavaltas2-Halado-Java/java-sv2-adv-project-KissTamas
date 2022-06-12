@@ -11,6 +11,6 @@ public class MarketplaceService {
 
     private AdRepository adRepository;
 
-    
+
 
 }

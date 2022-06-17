@@ -1,4 +1,4 @@
-package marketplace.marketplace;
+package marketplace.marketplace.exception;
 
 import org.zalando.problem.AbstractThrowableProblem;
 import org.zalando.problem.Status;

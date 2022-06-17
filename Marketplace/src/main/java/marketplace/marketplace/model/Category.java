@@ -1,4 +1,4 @@
-package marketplace.marketplace;
+package marketplace.marketplace.model;
 
 public enum Category {
 

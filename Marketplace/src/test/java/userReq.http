@@ -1,0 +1,45 @@
+POST http://localhost:8080/api/users
+Content-Type: application/json
+
+{
+  "name": "Béla",
+  "password": "negycsillag",
+  "email": "bela@gmail.com"
+}
+
+###
+
+POST http://localhost:8080/api/users
+Content-Type: application/json
+
+{
+  "name": "Józsi",
+  "password": "123456",
+  "email": "jozsi@gmail.com"
+}
+
+###
+
+GET http://localhost:8080/api/users
+Accept: application/json
+
+###
+
+GET http://localhost:8080/api/users/1
+Accept: application/json
+
+###
+
+PUT http://localhost:8080/api/users/1
+Content-Type: application/json
+
+{
+  "name": "Nagy Béla",
+  "password": "negycsillag",
+  "email": "bela@gmail.com"
+}
+
+###
+
+DELETE http://localhost:8080/api/users/1
+

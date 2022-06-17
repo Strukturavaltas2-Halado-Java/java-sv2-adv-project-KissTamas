@@ -1,11 +1,16 @@
-package marketplace.marketplace;
+package marketplace.marketplace.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import marketplace.marketplace.model.Category;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
-public class CreateAdCommand {
+@Setter
+public class UpdateAdCommand {
 
     private Category category;
     private int price;

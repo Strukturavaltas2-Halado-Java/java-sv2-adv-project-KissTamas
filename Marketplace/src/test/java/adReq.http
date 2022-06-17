@@ -1,0 +1,49 @@
+POST http://localhost:8080/api/ads
+Content-Type: application/json
+
+{
+  "category": "ELECTRONICS",
+  "price": 5000,
+  "place": "Budapest",
+  "description": "színes TV",
+  "userId": 1
+}
+
+###
+
+POST http://localhost:8080/api/ads
+Content-Type: application/json
+
+{
+  "category": "VEHICLE",
+  "price": 9000,
+  "place": "Veszprém",
+  "description": "fekete roller",
+  "userId": 2
+}
+
+###
+
+GET http://localhost:8080/api/ads
+Accept: application/json
+
+###
+
+GET http://localhost:8080/api/ads/1
+Accept: application/json
+
+###
+
+PUT http://localhost:8080/api/users/1
+Content-Type: application/json
+
+{
+  "name": "Nagy Béla",
+  "password": "negycsillag",
+  "email": "bela@gmail.com"
+}
+
+###
+
+DELETE http://localhost:8080/api/ads/1
+

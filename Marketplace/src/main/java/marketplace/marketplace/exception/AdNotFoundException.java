@@ -7,7 +7,7 @@ import java.net.URI;
 
 public class AdNotFoundException extends AbstractThrowableProblem {
     public AdNotFoundException(Long id) {
-        super(URI.create("ads/not-found"), "Not found", Status.NOT_FOUND, String.format("Ad not found: %d", id));
+        super(URI.create("ads/not-found"), "Not found", Status.NOT_FOUND, String.format("Ad not found with id %d", id));
     }
 }
 

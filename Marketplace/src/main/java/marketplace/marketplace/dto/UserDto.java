@@ -13,14 +13,14 @@ import java.util.List;
 @Setter
 public class UserDto {
 
-    private Long Id;
+    private Long id;
     private String name;
     private String password;
     private String email;
     private List<AdDto> adList;
 
     public UserDto(Long id, String name, String password, String email) {
-        Id = id;
+        this.id = id;
         this.name = name;
         this.password = password;
         this.email = email;

@@ -17,4 +17,5 @@ public class AdDto {
     private int price;
     private String place;
     private String description;
+    private Long userId;
 }

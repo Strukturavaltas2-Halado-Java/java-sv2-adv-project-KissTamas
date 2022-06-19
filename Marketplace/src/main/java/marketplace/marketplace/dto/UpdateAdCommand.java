@@ -6,14 +6,22 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import marketplace.marketplace.model.Category;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 public class UpdateAdCommand {
-
+    @NotNull
     private Category category;
+    @NotNull
+    @PositiveOrZero
     private int price;
+    @NotBlank(message = "Place can not be blank")
     private String place;
+    @NotBlank(message = "Description can not be blank")
     private String description;
 }

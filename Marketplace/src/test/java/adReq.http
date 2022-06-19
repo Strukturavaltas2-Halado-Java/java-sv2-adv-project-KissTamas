@@ -19,7 +19,7 @@ Content-Type: application/json
   "price": 9000,
   "place": "Veszprém",
   "description": "fekete roller",
-  "userId": 2
+  "userId": 50
 }
 
 ###
@@ -29,21 +29,27 @@ Accept: application/json
 
 ###
 
-GET http://localhost:8080/api/ads/1
+GET http://localhost:8080/api/ads/2
 Accept: application/json
 
 ###
 
-PUT http://localhost:8080/api/users/1
+GET http://localhost:8080/api/ads?minprice=6000&place=VeSzPrÉm&cat=vehicle
+Accept: application/json
+
+###
+
+PUT http://localhost:8080/api/ads/2
 Content-Type: application/json
 
 {
-  "name": "Nagy Béla",
-  "password": "negycsillag",
-  "email": "bela@gmail.com"
+  "category": "VEHICLE",
+  "price": 19000,
+  "place": "Veszprém",
+  "description": "fekete roller"
 }
 
 ###
 
-DELETE http://localhost:8080/api/ads/1
+DELETE http://localhost:8080/api/ads/2
 

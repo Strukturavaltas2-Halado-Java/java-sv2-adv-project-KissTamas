@@ -24,9 +24,7 @@ public class MarketplaceControllerWebClientTest {
 
     @Autowired
     MarketplaceService marketplaceService;
-
     UserDto userDtoTest;
-
     AdDto adDtoTest;
 
     @BeforeEach
@@ -38,12 +36,29 @@ public class MarketplaceControllerWebClientTest {
                 .expectBody(UserDto.class)
                 .returnResult().getResponseBody();
 
+        webTestClient.post()
+                .uri("/api/schools")
+                .bodyValue(new CreateUserCommand("Józsi", "ezegyjelszo", "jozsi@gmail.com"))
+                .exchange();
+
         adDtoTest = webTestClient.post()
                 .uri("api/ads")
                 .bodyValue(new CreateAdCommand(Category.VEHICLE, 5000, "Budapest", "fekete roller", userDtoTest.getId()))
                 .exchange()
                 .expectBody(AdDto.class)
                 .returnResult().getResponseBody();
+    }
+
+    @Test
+    void testCreateUser() {
+        assertThat(userDtoTest.getName()).isEqualTo("Béla");
+        assertThat(userDtoTest.getEmail()).isEqualTo("bela@gmail.com");
+    }
+
+    @Test
+    void testCreateAd() {
+        assertThat(adDtoTest.getPlace()).isEqualTo("Budapest");
+        assertThat(adDtoTest.getPrice()).isEqualTo(5000);
     }
 
     @Test
@@ -54,6 +69,16 @@ public class MarketplaceControllerWebClientTest {
                 .expectBody(UserDto.class)
                 .value(userDto -> assertThat(userDto.getName()).isEqualTo("Béla"))
                 .value(userDto -> assertThat(userDto.getEmail()).isEqualTo("bela@gmail.com"));
+    }
+
+    @Test
+    void testGetAdById() {
+        webTestClient.get()
+                .uri("api/ads/{id}", adDtoTest.getId())
+                .exchange()
+                .expectBody(AdDto.class)
+                .value(adDto -> assertThat(adDto.getPrice()).isEqualTo(5000))
+                .value(adDto -> assertThat(adDto.getPlace()).isEqualTo("Budapest"));
     }
 
     @Test
@@ -72,40 +97,6 @@ public class MarketplaceControllerWebClientTest {
                         .hasSize(1)
                         .extracting(AdDto::getPlace)
                         .containsOnly("Szentes"));
-    }
-
-    @Test
-    void testGetAdById() {
-        webTestClient.get()
-                .uri("api/ads/{id}", adDtoTest.getId())
-                .exchange()
-                .expectBody(AdDto.class)
-                .value(adDto -> assertThat(adDto.getPrice()).isEqualTo(5000))
-                .value(adDto -> assertThat(adDto.getPlace()).isEqualTo("Budapest"));
-    }
-
-    @Test
-    void testCreateUser() {
-        webTestClient.post()
-                .uri("api/users")
-                .bodyValue(new CreateUserCommand("Józsi", "ezegyjelszo", "jozsi@gmail.com"))
-                .exchange()
-                .expectStatus().isCreated()
-                .expectBody(UserDto.class)
-                .value(userDto -> assertThat(userDto.getName()).isEqualTo("Józsi"))
-                .value(userDto -> assertThat(userDto.getEmail()).isEqualTo("jozsi@gmail.com"));
-    }
-
-    @Test
-    void testCreateAd() {
-        webTestClient.post()
-                .uri("api/ads")
-                .bodyValue(new CreateAdCommand(Category.CLOTHING, 3500, "Veszprém", "farmer nadrág", userDtoTest.getId()))
-                .exchange()
-                .expectStatus().isCreated()
-                .expectBody(AdDto.class)
-                .value(userDto -> assertThat(userDto.getPrice()).isEqualTo(3500))
-                .value(userDto -> assertThat(userDto.getUserId()).isEqualTo(userDto.getUserId()));
     }
 
     @Test

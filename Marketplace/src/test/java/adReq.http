@@ -1,45 +1,55 @@
-POST http://localhost:8080/api/ads
+POST http://localhost:8080/api/users/1/ads
 Content-Type: application/json
 
 {
   "category": "ELECTRONICS",
   "price": 5000,
   "place": "Budapest",
-  "description": "színes TV",
-  "userId": 1
+  "description": "színes TV"
 }
 
 ###
 
-POST http://localhost:8080/api/ads
+POST http://localhost:8080/api/users/1/ads
 Content-Type: application/json
 
 {
   "category": "VEHICLE",
   "price": 9000,
   "place": "Veszprém",
-  "description": "fekete roller",
-  "userId": 50
+  "description": "fekete roller"
 }
 
 ###
 
-GET http://localhost:8080/api/ads
+POST http://localhost:8080/api/users/2/ads
+Content-Type: application/json
+
+{
+  "category": "OTHER",
+  "price": 500,
+  "place": "Szolnok",
+  "description": "doboz"
+}
+
+###
+
+GET http://localhost:8080/api/users/ads
 Accept: application/json
 
 ###
 
-GET http://localhost:8080/api/ads/2
+GET http://localhost:8080/api/users/ads/1
 Accept: application/json
 
 ###
 
-GET http://localhost:8080/api/ads?minprice=6000&place=VeSzPrÉm&cat=vehicle
+GET http://localhost:8080/api/users/ads?minprice=6000&place=veszprém&cat=vehicle
 Accept: application/json
 
 ###
 
-PUT http://localhost:8080/api/ads/2
+PUT http://localhost:8080/api/users/ads/2
 Content-Type: application/json
 
 {
@@ -51,5 +61,5 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:8080/api/ads/2
+DELETE http://localhost:8080/api/users/ads/1
 

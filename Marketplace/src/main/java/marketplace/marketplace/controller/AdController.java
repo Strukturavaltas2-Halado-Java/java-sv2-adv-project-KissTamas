@@ -15,12 +15,12 @@ import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/ads")
+@RequestMapping("/api/users")
 public class AdController {
 
     private MarketplaceService marketplaceService;
 
-    @GetMapping
+    @GetMapping("/ads")
     @Operation(summary = "list all advertises")
     public List<AdDto> getAds(@RequestParam Optional<String> cat,
                               @RequestParam Optional<Integer> minprice,
@@ -29,25 +29,25 @@ public class AdController {
         return marketplaceService.getAds(cat, minprice, maxprice, place);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/ads/{id}")
     public AdDto getAd(@PathVariable("id") Long id) {
         return marketplaceService.getAd(id);
     }
 
-    @PostMapping
+    @PostMapping("/{id}/ads")
     @Operation(summary = "create new advertise")
     @ResponseStatus(HttpStatus.CREATED)
-    public AdDto createAd(@Valid @RequestBody CreateAdCommand command) {
-        return marketplaceService.createAd(command);
+    public AdDto createAd(@PathVariable("id") Long userId, @Valid @RequestBody CreateAdCommand command) {
+        return marketplaceService.createAd(userId, command);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/ads/{id}")
     @Operation(summary = "update advertise data")
     public AdDto updateAd(@PathVariable("id") Long id, @Valid @RequestBody UpdateAdCommand command) {
         return marketplaceService.updateAd(id, command);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/ads/{id}")
     @Operation(summary = "delete advertise by id")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAd(@PathVariable("id") Long id) {

@@ -24,6 +24,4 @@ public class CreateAdCommand {
     private String place;
     @NotBlank(message = "Description can not be blank")
     private String description;
-    @NotNull
-    private Long userId;
 }

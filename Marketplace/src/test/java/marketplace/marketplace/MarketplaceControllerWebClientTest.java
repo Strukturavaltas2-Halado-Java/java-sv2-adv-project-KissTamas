@@ -37,13 +37,13 @@ public class MarketplaceControllerWebClientTest {
                 .returnResult().getResponseBody();
 
         webTestClient.post()
-                .uri("/api/schools")
+                .uri("/api/users")
                 .bodyValue(new CreateUserCommand("Józsi", "ezegyjelszo", "jozsi@gmail.com"))
                 .exchange();
 
         adDtoTest = webTestClient.post()
-                .uri("api/ads")
-                .bodyValue(new CreateAdCommand(Category.VEHICLE, 5000, "Budapest", "fekete roller", userDtoTest.getId()))
+                .uri(uriBuilder -> uriBuilder.path("/api/users/{id}/ads").build(userDtoTest.getId()))
+                .bodyValue(new CreateAdCommand(Category.VEHICLE, 5000, "Budapest", "fekete roller"))
                 .exchange()
                 .expectBody(AdDto.class)
                 .returnResult().getResponseBody();
@@ -74,7 +74,7 @@ public class MarketplaceControllerWebClientTest {
     @Test
     void testGetAdById() {
         webTestClient.get()
-                .uri("api/ads/{id}", adDtoTest.getId())
+                .uri("api/users/ads/{id}", adDtoTest.getId())
                 .exchange()
                 .expectBody(AdDto.class)
                 .value(adDto -> assertThat(adDto.getPrice()).isEqualTo(5000))
@@ -84,13 +84,13 @@ public class MarketplaceControllerWebClientTest {
     @Test
     void testGetAdByMinprice() {
         webTestClient.post()
-                .uri("api/ads")
-                .bodyValue(new CreateAdCommand(Category.VEHICLE, 999_999, "Szentes", "Volvo", userDtoTest.getId()))
+                .uri(uriBuilder -> uriBuilder.path("/api/users/{id}/ads").build(userDtoTest.getId()))
+                .bodyValue(new CreateAdCommand(Category.VEHICLE, 999_999, "Szentes", "Volvo"))
                 .exchange()
                 .expectBody(AdDto.class);
 
         webTestClient.get()
-                .uri(builder -> builder.path("/api/ads").queryParam("minprice", 900_000).build())
+                .uri(builder -> builder.path("/api/users/ads").queryParam("minprice", 900_000).build())
                 .exchange()
                 .expectBodyList(AdDto.class)
                 .value(list -> assertThat(list)
@@ -102,7 +102,7 @@ public class MarketplaceControllerWebClientTest {
     @Test
     void testUpdateAd() {
         webTestClient.put()
-                .uri("/api/ads/{id}", adDtoTest.getId())
+                .uri("/api/users/ads/{id}", adDtoTest.getId())
                 .bodyValue(new UpdateAdCommand(Category.VEHICLE, 5000, "Vecsés", "fekete roller"))
                 .exchange()
                 .expectBody(AdDto.class)
@@ -122,22 +122,22 @@ public class MarketplaceControllerWebClientTest {
     @Test
     void testUserNotFound() {
         Problem p = webTestClient.post()
-                .uri("api/ads")
-                .bodyValue(new CreateAdCommand(Category.VEHICLE, 5000, "Budapest", "fekete roller", 500L))
+                .uri("api/users/50000/ads")
+                .bodyValue(new CreateAdCommand(Category.VEHICLE, 5000, "Budapest", "fekete roller"))
                 .exchange()
                 .expectBody(Problem.class).returnResult().getResponseBody();
         assertThat(p).isNotNull();
-        assertEquals("User not found with id 500", p.getDetail());
+        assertEquals("User not found with id 50000", p.getDetail());
     }
 
     @Test
     void testAdNotFound() {
         Problem p = webTestClient.get()
-                .uri("api/ads/500")
+                .uri("api/users/ads/50000")
                 .exchange()
                 .expectBody(Problem.class).returnResult().getResponseBody();
         assertThat(p).isNotNull();
-        assertEquals("Ad not found with id 500", p.getDetail());
+        assertEquals("Ad not found with id 50000", p.getDetail());
     }
 
     @Test
@@ -150,16 +150,16 @@ public class MarketplaceControllerWebClientTest {
                 .exchange()
                 .expectBodyList(UserDto.class)
                 .value(list -> assertThat(list)
-                        .hasSize(0));
+                        .hasSize(1));
     }
 
     @Test
     void testDeleteAd() {
         webTestClient.delete()
-                .uri("/api/ads/{id}", adDtoTest.getId())
+                .uri("/api/users/ads/{id}", adDtoTest.getId())
                 .exchange();
         webTestClient.get()
-                .uri("/api/ads")
+                .uri("/api/users/ads")
                 .exchange()
                 .expectBodyList(AdDto.class)
                 .value(list -> assertThat(list)

@@ -24,10 +24,11 @@ public class Ad {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Ad(Category category, int price, String place, String description) {
+    public Ad(Category category, int price, String place, String description, User user) {
         this.category = category;
         this.price = price;
         this.place = place;
         this.description = description;
+        this.user = user;
     }
 }

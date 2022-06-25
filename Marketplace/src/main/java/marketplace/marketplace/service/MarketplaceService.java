@@ -47,9 +47,9 @@ public class MarketplaceService {
         return modelMapper.map(filtered, targetListType);
     }
 
-    public AdDto createAd(CreateAdCommand command) {
-        User user = userRepository.findById(command.getUserId()).orElseThrow(() -> new UserNotFoundException(command.getUserId()));
-        Ad newAd = new Ad(command.getCategory(), command.getPrice(), command.getPlace(), command.getDescription());
+    public AdDto createAd(Long userId, CreateAdCommand command) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
+        Ad newAd = new Ad(command.getCategory(), command.getPrice(), command.getPlace(), command.getDescription(), user);
         user.addAd(newAd);
         adRepository.save(newAd);
         return modelMapper.map(newAd, AdDto.class);
@@ -89,7 +89,7 @@ public class MarketplaceService {
         adRepository.delete(ad);
     }
 
-    public void deleteAdsByUser(Long userId) {
+    private void deleteAdsByUser(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
         for (Ad a: user.getAdList()){
             adRepository.delete(a);

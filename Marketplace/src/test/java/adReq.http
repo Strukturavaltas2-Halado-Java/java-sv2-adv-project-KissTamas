@@ -5,7 +5,7 @@ Content-Type: application/json
   "category": "ELECTRONICS",
   "price": 5000,
   "place": "Budapest",
-  "description": "színes TV"
+  "description": "color TV"
 }
 
 ###
@@ -17,7 +17,7 @@ Content-Type: application/json
   "category": "VEHICLE",
   "price": 9000,
   "place": "Veszprém",
-  "description": "fekete roller"
+  "description": "black Volvo"
 }
 
 ###
@@ -29,7 +29,7 @@ Content-Type: application/json
   "category": "OTHER",
   "price": 500,
   "place": "Szolnok",
-  "description": "doboz"
+  "description": "box"
 }
 
 ###
@@ -56,7 +56,7 @@ Content-Type: application/json
   "category": "VEHICLE",
   "price": 19000,
   "place": "Veszprém",
-  "description": "fekete roller"
+  "description": "black Volvo"
 }
 
 ###

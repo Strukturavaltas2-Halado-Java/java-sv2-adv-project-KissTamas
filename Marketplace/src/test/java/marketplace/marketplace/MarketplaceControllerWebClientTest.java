@@ -31,19 +31,19 @@ public class MarketplaceControllerWebClientTest {
     void init() {
         userDtoTest = webTestClient.post()
                 .uri("api/users")
-                .bodyValue(new CreateUserCommand("Béla", "negycsillag", "bela@gmail.com"))
+                .bodyValue(new CreateUserCommand("John Doe", "********", "johndoe@gmail.com"))
                 .exchange()
                 .expectBody(UserDto.class)
                 .returnResult().getResponseBody();
 
         webTestClient.post()
                 .uri("/api/users")
-                .bodyValue(new CreateUserCommand("Józsi", "ezegyjelszo", "jozsi@gmail.com"))
+                .bodyValue(new CreateUserCommand("Jane Doe", "12345678", "janedoe@gmail.com"))
                 .exchange();
 
         adDtoTest = webTestClient.post()
                 .uri(uriBuilder -> uriBuilder.path("/api/users/{id}/ads").build(userDtoTest.getId()))
-                .bodyValue(new CreateAdCommand(Category.VEHICLE, 5000, "Budapest", "fekete roller"))
+                .bodyValue(new CreateAdCommand(Category.VEHICLE, 5000, "Budapest", "black Volvo"))
                 .exchange()
                 .expectBody(AdDto.class)
                 .returnResult().getResponseBody();
@@ -51,8 +51,8 @@ public class MarketplaceControllerWebClientTest {
 
     @Test
     void testCreateUser() {
-        assertThat(userDtoTest.getName()).isEqualTo("Béla");
-        assertThat(userDtoTest.getEmail()).isEqualTo("bela@gmail.com");
+        assertThat(userDtoTest.getName()).isEqualTo("John Doe");
+        assertThat(userDtoTest.getEmail()).isEqualTo("johndoe@gmail.com");
     }
 
     @Test
@@ -67,8 +67,8 @@ public class MarketplaceControllerWebClientTest {
                 .uri("api/users/{id}", userDtoTest.getId())
                 .exchange()
                 .expectBody(UserDto.class)
-                .value(userDto -> assertThat(userDto.getName()).isEqualTo("Béla"))
-                .value(userDto -> assertThat(userDto.getEmail()).isEqualTo("bela@gmail.com"));
+                .value(userDto -> assertThat(userDto.getName()).isEqualTo("John Doe"))
+                .value(userDto -> assertThat(userDto.getEmail()).isEqualTo("johndoe@gmail.com"));
     }
 
     @Test
@@ -85,7 +85,7 @@ public class MarketplaceControllerWebClientTest {
     void testGetAdByMinprice() {
         webTestClient.post()
                 .uri(uriBuilder -> uriBuilder.path("/api/users/{id}/ads").build(userDtoTest.getId()))
-                .bodyValue(new CreateAdCommand(Category.VEHICLE, 999_999, "Szentes", "Volvo"))
+                .bodyValue(new CreateAdCommand(Category.VEHICLE, 999_999, "Szentes", "red Volvo"))
                 .exchange()
                 .expectBody(AdDto.class);
 
@@ -103,7 +103,7 @@ public class MarketplaceControllerWebClientTest {
     void testUpdateAd() {
         webTestClient.put()
                 .uri("/api/users/ads/{id}", adDtoTest.getId())
-                .bodyValue(new UpdateAdCommand(Category.VEHICLE, 5000, "Vecsés", "fekete roller"))
+                .bodyValue(new UpdateAdCommand(Category.VEHICLE, 5000, "Vecsés", "blue Volvo"))
                 .exchange()
                 .expectBody(AdDto.class)
                 .value(adDto -> assertEquals("Vecsés", adDto.getPlace()));
@@ -113,17 +113,17 @@ public class MarketplaceControllerWebClientTest {
     void testUpdateUser() {
         webTestClient.put()
                 .uri("/api/users/{id}", userDtoTest.getId())
-                .bodyValue(new UpdateUserCommand("Béla", "uj_jelszo", "bela@gmail.com"))
+                .bodyValue(new UpdateUserCommand("John Doe", "*/*/*/*/*/", "johndoe@gmail.com"))
                 .exchange()
                 .expectBody(UserDto.class)
-                .value(userDto -> assertEquals("uj_jelszo", userDto.getPassword()));
+                .value(userDto -> assertEquals("*/*/*/*/*/", userDto.getPassword()));
     }
 
     @Test
     void testUserNotFound() {
         Problem p = webTestClient.post()
                 .uri("api/users/50000/ads")
-                .bodyValue(new CreateAdCommand(Category.VEHICLE, 5000, "Budapest", "fekete roller"))
+                .bodyValue(new CreateAdCommand(Category.VEHICLE, 5000, "Budapest", "fekete Volvo"))
                 .exchange()
                 .expectBody(Problem.class).returnResult().getResponseBody();
         assertThat(p).isNotNull();
@@ -170,7 +170,7 @@ public class MarketplaceControllerWebClientTest {
     void createUserWithWrongEmailAddress() {
         Problem p = webTestClient.post()
                 .uri("api/users")
-                .bodyValue(new CreateUserCommand("Józsi", "ezegyjelszo", "@gmail.com"))
+                .bodyValue(new CreateUserCommand("Jack Doe", "password", "@gmail.com"))
                 .exchange()
                 .expectBody(Problem.class).returnResult().getResponseBody();
         assertThat(p).isNotNull();

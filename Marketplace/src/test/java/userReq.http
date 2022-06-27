@@ -2,9 +2,9 @@ POST http://localhost:8080/api/users
 Content-Type: application/json
 
 {
-  "name": "Béla",
-  "password": "negycsillag",
-  "email": "bela@gmail.com"
+  "name": "John Doe",
+  "password": "********",
+  "email": "johndoe@gmail.com"
 }
 
 ###
@@ -13,9 +13,9 @@ POST http://localhost:8080/api/users
 Content-Type: application/json
 
 {
-  "name": "Józsi",
+  "name": "Jane Doe",
   "password": "123456",
-  "email": "jozsi@gmail.com"
+  "email": "janedoe@gmail.com"
 }
 
 ###
@@ -34,9 +34,9 @@ PUT http://localhost:8080/api/users/1
 Content-Type: application/json
 
 {
-  "name": "Nagy Béla",
-  "password": "negycsillag",
-  "email": "bela@gmail.com"
+  "name": "John Doe",
+  "password": "********",
+  "email": "johndoe@gmail.com"
 }
 
 ###

@@ -26,6 +26,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "get user by id")
     public UserDto getUser(@PathVariable("id") Long id) {
         return marketplaceService.getUser(id);
     }

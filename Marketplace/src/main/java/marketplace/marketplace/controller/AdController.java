@@ -30,6 +30,7 @@ public class AdController {
     }
 
     @GetMapping("/ads/{id}")
+    @Operation(summary = "get advertise by id")
     public AdDto getAd(@PathVariable("id") Long id) {
         return marketplaceService.getAd(id);
     }

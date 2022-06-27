@@ -1,5 +1,6 @@
 package marketplace.marketplace.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,12 +17,16 @@ import javax.validation.constraints.PositiveOrZero;
 @Setter
 public class CreateAdCommand {
     @NotNull
+    @Schema(description = "Advertise category", example = "OTHER")
     private Category category;
     @PositiveOrZero
     @NotNull
+    @Schema(description = "Guide price ", example = "1000")
     private int price;
+    @Schema(description = "Place of trade", example = "Budapest")
     @NotBlank(message = "Place can not be blank")
     private String place;
+    @Schema(description = "Advertise description", example = "nice thing")
     @NotBlank(message = "Description can not be blank")
     private String description;
 }

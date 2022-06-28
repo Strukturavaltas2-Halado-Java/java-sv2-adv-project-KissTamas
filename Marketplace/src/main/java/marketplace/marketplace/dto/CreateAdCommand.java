@@ -17,7 +17,7 @@ import javax.validation.constraints.PositiveOrZero;
 @Setter
 public class CreateAdCommand {
     @NotNull
-    @Schema(description = "Advertise category", example = "OTHER")
+    @Schema(description = "Can be: 'VEHICLE', 'PROPERTY', 'CLOTHING', 'ELECTRONICS' or 'OTHER'", example = "OTHER")
     private Category category;
     @PositiveOrZero
     @NotNull

@@ -56,6 +56,15 @@ Végpontok:
 | PUT          | `"/api/users/ads/{id}"`     | egy meglévő hirdetés adatainak módosítása `id` alapján             |
 | DELETE       | `"/api/users/ads/{id}"`     | törli a megadott hirdetést `id` alapján                            |
 
+A `"/api/users/ads"` végponton található GET kérésnél paraméterezhető a lekérdezés: 
+
+| Paraméter | Leírás                 |
+| ------------ | ----------------------- |
+| cat        | kategória megadása          |
+| minprice          | minimum ár megadása    |
+| maxprice        |  maximum ár megadása          |
+| place          | hely megadása     |
+
 ---
 
 ## Technológiai részletek
